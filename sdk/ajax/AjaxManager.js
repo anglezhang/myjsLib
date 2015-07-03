@@ -1,4 +1,9 @@
 define(function (require, exports, module) {
+    /**
+    * 描述：ajax访问
+    * @auther zhangzhenxing
+    * v1.0 主要管理ajax访问
+    */
     var t = require("../fram/common/Tools");
     var config = require("../SysConfig");
     var cAjax = function (config, $) {

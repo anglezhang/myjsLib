@@ -2,7 +2,8 @@ define (function(require, exports, module)
 {
     
 	/**
-     * 时间工具类
+    * 时间工具类 v1.0
+    * @auther zhangzhenxing
 	* 构造器 
 	* @param d Date 类型的参数
 	*/

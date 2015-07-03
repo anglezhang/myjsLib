@@ -1,7 +1,7 @@
 define(function(require, exports, module)
 {
     /**
-     * 百度地图工具类
+     * 百度地图工具类 基于百度地图v2.x版本
      * 提供百度地图初始地图、初始信息方法
      * */
     var defaultCity = "西安";

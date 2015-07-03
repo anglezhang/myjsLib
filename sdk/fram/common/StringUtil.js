@@ -1,8 +1,8 @@
 define(function(require, exports, module)
 {
 	/**
-	* 字符串处理工具类
-	* @author zhangzhenx
+	* 字符串处理工具类 v1.0
+	* @author zhangzhenxing
 	* @Date 2015-06-26
 	*/
 
