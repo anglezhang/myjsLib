@@ -10,26 +10,26 @@ define(function(require, exports, module)
     var dateTool = require("./DateTool");
     module.exports.debug = function(content)
     {
-            if(LogLevel>=4)
-                    consolePrint("[D]",content);
+        if(LogLevel>=4)
+            consolePrint("[D]",content);
     };
 
     //控制台输出信息
     module.exports.print = function(content)
     {
-            if(LogLevel>=3)
-                    consolePrint("[I]",content);
+        if(LogLevel>=3)
+            consolePrint("[I]",content);
     };
 
     module.exports.error = function(content)
     {
-            if(LogLevel>=2)
-                    consolePrint("[E]",content);
+        if(LogLevel>=2)
+           consolePrint("[E]",content);
     };
 
     module.exports.dir=function(obj)
     {
-            console.dir(obj);
+        console.dir(obj);
     };
 
     var consolePrint = function (tag, msg)
@@ -71,20 +71,20 @@ define(function(require, exports, module)
     //将Json对象转换为字符串
     module.exports.jsonToStr=function(jsonObj)
     {
-            return JSON.stringify(jsonObj);
+        return JSON.stringify(jsonObj);
     };
 
     //将字符串转换为Json对象
     module.exports.strToJson=function(str)
     {
-            return JSON.parse(str);
+        return JSON.parse(str);
     };
 
     //将字符串中的 src="/files/ 替换为 src="http://serverIP/files/
     module.exports.ReplaceImgPath = function (str)
     {
-            //consolePrint("ReplaceImgPath", " str=" + str);
-            var tRegExp = new RegExp('src="/', "g");
+        //consolePrint("ReplaceImgPath", " str=" + str);
+        var tRegExp = new RegExp('src="/', "g");
     }; 
 
     //替换字符串
@@ -92,8 +92,8 @@ define(function(require, exports, module)
     module.exports.ReplaceAll=function(str1,str2,str3)
     {
 //        console.log(str1+"|"+str2+"|"+str3);
-            var tRegExp=new RegExp(str2,"g");
-            return str1.replace(tRegExp,str3);
+        var tRegExp=new RegExp(str2,"g");
+        return str1.replace(tRegExp,str3);
     };
     /**
      * 取界面传参
@@ -115,22 +115,6 @@ define(function(require, exports, module)
         }
         return "";
     }
-    //返回行/列 div class ui-block-a ui-grid-c
-    module.exports.getLayoutClass = function(index,type)
-    {
-            var rowList=["","","ui-grid-a","ui-grid-b","ui-grid-c","ui-grid-d"];
-
-            var colList=["","ui-block-a","ui-block-b","ui-block-c","ui-block-d","ui-block-e"];
-
-            var rValue="";
-            if(type==="r")
-                    rValue=rowList[index];
-            else
-                    rValue=colList[index];
-
-            return rValue;
-    };
-
 
 
     /*
