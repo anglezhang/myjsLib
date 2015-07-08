@@ -44,12 +44,15 @@ define(function(require, exports, module)
             if(window.localStorage)
             {
                 window.localStorage.setItem(cookieName,cookieVal);
+            }else
+            {
+               var exdate = new Date();//如果过期时间为null 则将今天转化为1000*60*60*24*365格式
+                exdate.setDate(exdate.getDate()+expiredays);
+                document.cookie = cookieName 
+                                + "=" + escape(cookieVal) 
+                                + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString()); 
             }
-            var exdate = new Date();//如果过期时间为null 则将今天转化为1000*60*60*24*365格式
-            exdate.setDate(exdate.getDate()+expiredays);
-            document.cookie = cookieName 
-                            + "=" + escape(cookieVal) 
-                            + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+            
         }
     };
 });
