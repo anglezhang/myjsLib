@@ -72,4 +72,12 @@ define(function(require, exports, module)
             map.openInfoWindow(infoWindow, markerPoint); //开启信息窗口
         });
     };
+
+    /**
+    * 描述:清除地图地表
+    */
+    module.exports.clearMap = function(map)
+    {
+        map.clearOverlays();
+    }
 });
