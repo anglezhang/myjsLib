@@ -44,40 +44,26 @@ define (function(require, exports, module)
             return str;   
         }
 
-            /**
-            * 计算某日多少天之后
-            * @param days 要加减的天数
-            * @param fmtStr 格式化的字符串
-            */
-            this.afterDays = function(days,fmatStr)
-            {
-            //设置日期
-            var anotherDate = new Date();
-            anotherDate.setDate(this.date.getDate() + days);
-			var str = fmatStr;   
-            var Week = ['日','一','二','三','四','五','六'];              
-           
-            str=str.replace(/yyyy|YYYY/,anotherDate.getFullYear());   
-            str=str.replace(/yy|YY/,(anotherDate.getYear() % 100)>9?(anotherDate.getYear() % 100).toString():'0' + (anotherDate.getYear() % 100));   
-
-            str=str.replace(/MM/,(anotherDate.getMonth() + 1)>9?(anotherDate.getMonth() + 1).toString():'0' + (anotherDate.getMonth() + 1));   
-            str=str.replace(/M/g,(anotherDate.getMonth() + 1));   
-
-            str=str.replace(/w|W/g,Week[anotherDate.getDay()]);   
-
-            str=str.replace(/dd|DD/,anotherDate.getDate()>9?anotherDate.getDate().toString():'0' + anotherDate.getDate());   
-            str=str.replace(/d|D/g,anotherDate.getDate());   
-
-            str=str.replace(/hh|HH/,anotherDate.getHours()>9?anotherDate.getHours().toString():'0' + anotherDate.getHours());   
-            str=str.replace(/h|H/g,anotherDate.getHours());   
-            str=str.replace(/mm/,anotherDate.getMinutes()>9?anotherDate.getMinutes().toString():'0' + anotherDate.getMinutes());   
-            str=str.replace(/m/g,anotherDate.getMinutes());   
-
-            str=str.replace(/ss|SS/,anotherDate.getSeconds()>9?anotherDate.getSeconds().toString():'0' + anotherDate.getSeconds());   
-            str=str.replace(/s|S/g,anotherDate.getSeconds());   
-
-            return str; 
-		}
+        /**
+        * 根据字符串 初始化日期
+        * @param fmtStr 格式化的字符串 如 201209091220
+        */
+        this.setDate = function(fmtStr)
+        {
+            var date = new Date();
+            var year = parseInt(fmtStr.substring(0,4));
+            var mouth = parseInt(fmtStr.substring(4,6))-1;
+            var day = parseInt(fmtStr.substring(6,8));
+            var hours = parseInt(fmtStr.substring(8,10));
+            var minutes = parseInt(fmtStr.substring(10,12));
+            date.setFullYear(year);
+            date.setMonth(mouth);
+            date.setDate(day);
+            date.setHours(hours);
+            date.setMinutes(minutes);
+            return date;
+        }
+            
     }
     /**
      * @return 返回当前日期月份的天数
