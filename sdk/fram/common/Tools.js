@@ -202,14 +202,21 @@ define(function(require, exports, module)
 
     //检查是否为空 空包括 null ，undefined，“”，length=0
     module.exports.isEmpty=function(obj){
-        if(obj===null)return true;
-        if(obj==="")return true;
-        if(obj==="undefined")return true;
-        if(obj===undefined)return true;
-        if(obj==="null")return true;
-        if(obj.toString().trim()===null)return true;
-        if(obj.toString().trim().length===0)return true;
-        return false;
+        try
+        {
+            if(obj===null)return true;
+            if(obj==="")return true;
+            if(obj==="undefined")return true;
+            if(obj===undefined)return true;
+            if(obj==="null")return true;
+            if(obj.toString().trim()===null)return true;
+            if(obj.toString().trim().length===0)return true;
+            if(obj.length==0)return true;
+            return false;
+        }catch(e)
+        {
+            return false;
+        }
     };
     /**
     * 将界面定位到顶部
