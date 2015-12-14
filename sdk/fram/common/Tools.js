@@ -32,6 +32,27 @@ define(function(require, exports, module)
         console.dir(obj);
     };
 
+    /**
+    *@描述 判断是否空对象
+    */
+    var isEmptyObj = function(obj)
+    {
+        try
+        {
+            if(obj===null)return true;
+            if(obj==="")return true;
+            if(obj==="undefined")return true;
+            if(obj===undefined)return true;
+            if(obj==="null")return true;
+            if(obj.toString().trim()===null)return true;
+            if(obj.toString().trim().length===0)return true;
+            if(obj.length==0)return true;
+            return false;
+        }catch(e)
+        {
+            return false;
+        }
+    };
     var consolePrint = function (tag, msg)
     {
         /*
@@ -68,6 +89,29 @@ define(function(require, exports, module)
         }
     };
 
+    /**
+    *@描述 复制数组
+    */
+    module.exports.copyToArray = function(sourceArray,copyArray)
+    {
+        for(var i=0;i<sourceArray.length;i++)
+        {
+            var obj = sourceArray[i];
+            copyArray.push(obj);
+        }
+    };
+
+    /**
+    *@描述 trim() 去掉空格
+    */
+    module.exports.trim=function(str)
+    {
+        if(isEmptyObj(str))
+        {
+            return null;
+        }
+        return str.replace(/(^\s*)|(\s*$)/g, ""); 
+    };
     //将Json对象转换为字符串
     module.exports.jsonToStr=function(jsonObj)
     {
@@ -92,8 +136,14 @@ define(function(require, exports, module)
     module.exports.ReplaceAll=function(str1,str2,str3)
     {
 //        console.log(str1+"|"+str2+"|"+str3);
-        var tRegExp=new RegExp(str2,"g");
-        return str1.replace(tRegExp,str3);
+        try{
+            str1 = str1 + "";
+            var tRegExp=new RegExp(str2,"g");
+            return str1.replace(tRegExp,str3);
+        }catch(e){
+            consolePrint("[E]","ReplaceAll 函数出错");
+        }
+        
     };
     /**
      * 取界面传参
