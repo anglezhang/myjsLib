@@ -46,7 +46,7 @@ define(function(require, exports, module)
             else {
                     alert('failed'+this.getStatus());
             }        
-	    },{enableHighAccuracy: true})
+        },{enableHighAccuracy: true})
     };
 
     /**
@@ -74,10 +74,23 @@ define(function(require, exports, module)
     };
 
     /**
-    * 描述:清除地图地表
+    * 添加点击事件
+    * @param map 地图对象
+    * @param fun(lng,lat)点击后对象函数
     */
-    module.exports.clearMap = function(map)
+    module.exports.addClickEvent = function(map,fun)
+    {
+        map.addEventListener('click',function(e)
+        {
+            fun(e.point.lng,e.point.lat);
+        });
+    };
+
+    /**
+    * 清除覆盖物
+    */
+    module.exports.clear = function(map)
     {
         map.clearOverlays();
-    }
+    };
 });

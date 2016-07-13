@@ -94,10 +94,18 @@ define(function(require, exports, module)
     */
     module.exports.copyToArray = function(sourceArray,copyArray)
     {
-        for(var i=0;i<sourceArray.length;i++)
+        if(!isEmptyObj(sourceArray))
         {
-            var obj = sourceArray[i];
-            copyArray.push(obj);
+            for(var i=0;i<sourceArray.length;i++)
+            {
+                var obj = sourceArray[i];
+                var newObj = new Object();
+                for(k in obj)
+                {
+                    newObj[k] = obj[k];
+                }
+                copyArray.push(newObj);
+            }
         }
     };
 
@@ -110,7 +118,14 @@ define(function(require, exports, module)
         {
             return null;
         }
-        return str.replace(/(^\s*)|(\s*$)/g, ""); 
+        if(typeof(str)==='string')
+        {
+            return str.replace(/(^\s*)|(\s*$)/g, ""); 
+        }else
+        {
+            return str;
+        }
+        
     };
     //将Json对象转换为字符串
     module.exports.jsonToStr=function(jsonObj)
@@ -252,21 +267,8 @@ define(function(require, exports, module)
 
     //检查是否为空 空包括 null ，undefined，“”，length=0
     module.exports.isEmpty=function(obj){
-        try
-        {
-            if(obj===null)return true;
-            if(obj==="")return true;
-            if(obj==="undefined")return true;
-            if(obj===undefined)return true;
-            if(obj==="null")return true;
-            if(obj.toString().trim()===null)return true;
-            if(obj.toString().trim().length===0)return true;
-            if(obj.length==0)return true;
-            return false;
-        }catch(e)
-        {
-            return false;
-        }
+        
+        return isEmptyObj(obj);
     };
     /**
     * 将界面定位到顶部
@@ -295,6 +297,7 @@ define(function(require, exports, module)
         if(regExp.test(str)) return true;
         else return false;
     };
+
     /**
     * 数字校验
     * @param str 要检验的数字
@@ -302,9 +305,95 @@ define(function(require, exports, module)
     */
     module.exports.isNumber = function(str)
     {
-        var regExp = new RegExp(/^[0-9]*$/g);
+        var regExp = new RegExp(/^-?[0-9]*$/g);
         if(regExp.test(str)) return true;
         else return false;
+    };
+
+    /**
+    *@描述 日期格式校验 YYYY-MM-DD
+    *@param str 要检验的数字
+    *@return ture 验证通过 false 验证不通过
+    */
+    module.exports.isSimpleDate = function(str)
+    {
+        var text = /^(\d{4})\-(\d{2})\-(\d{2})$/;
+        return text.test(str);
+    };
+
+    /**
+    *@描述 时间格式校验 hh:mm
+    *@param str 要检验的数字
+    *@return ture 验证通过 false 验证不通过
+    */
+    module.exports.isSimpleTime = function(str)
+    {
+        var text = /^(\d{2})\:(\d{2})$/;
+        return text.test(str);
+    };
+    /**
+    *@描述 校验小数
+    *@param str 要验证的字符
+    *@param true 验证通过 false 验证不通过
+    */
+    module.exports.isFloat = function(str)
+    {
+        var regExp = new RegExp("^\\d+(\\.\\d+)?$");
+        if(regExp.test(str)) return true;
+        else return false;
+    };
+    /**
+    *@保留2位小数
+    */
+    var changeTwoDecimal_f = function(number)
+    {
+        if(isEmptyObj(number) || isNaN(number))
+        {
+            return "0.00";
+        }
+        var f_x = parseFloat(number);
+        if (isNaN(f_x)) {
+            //alert('function:changeTwoDecimal->parameter error');
+            return false;
+        }
+        var f_x = Math.round(number * 100) / 100;
+        var s_x = f_x.toString();
+        var pos_decimal = s_x.indexOf('.');
+        if (pos_decimal < 0) {
+            pos_decimal = s_x.length;
+            s_x += '.';
+        }
+        while (s_x.length <= pos_decimal + 2) {
+            s_x += '0';
+        }
+        return s_x;
+    };
+
+    /**
+    *@描述 保留俩位小数 
+    */
+    module.exports.ChangeTwoDecimalNumber = function(number)
+    {
+        if(isEmptyObj(number) || isNaN(number))
+        {
+            return "0.00";
+        }
+        var f_x = parseFloat(number);
+        if (isNaN(f_x)) {
+            //alert('function:changeTwoDecimal->parameter error');
+            return false;
+        }
+        var f_x = Math.round(number * 100) / 100;
+        var s_x = f_x.toString();
+        var pos_decimal = s_x.indexOf('.');
+        if (pos_decimal < 0) {
+            pos_decimal = s_x.length;
+            s_x += '.';
+        }
+        while (s_x.length <= pos_decimal + 2) {
+            s_x += '0';
+        }
+        return s_x;
     };
 
     /**
@@ -317,5 +406,32 @@ define(function(require, exports, module)
         var regExp =  new RegExp(/^[\u4e00-\u9fa5]+$/); 
         if(regExp.test(str)) return true;
         else return false;
+    };
+
+    /**
+    *@描述 给下拉框设置值
+    *@param $ jquery对象
+    *@param elment ID
+    *@param val 控件值的值
+    */
+    var setSelectVal = function($,id,val)
+    {
+        $("#" + id).val(val);
+        $("#" + id).find("option[selected]").removeAttr('selected');
+        var optionObj = isEmptyObj(val)
+            ? $("#" + id).find("option").first() 
+            : $("#" + id).find("option[value='" + val+ "']");
+        optionObj.attr("selected",true);
+    };
+
+    /**
+    *@描述 给下拉框设置值
+    *@param $ jquery对象
+    *@param elment ID
+    *@param val 控件值的值
+    */
+    module.exports.SetSelectValue = function($,id,val)
+    {
+        setSelectVal($,id,val);
     };
 });

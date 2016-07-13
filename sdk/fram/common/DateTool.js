@@ -7,8 +7,6 @@ define (function(require, exports, module)
 	* 构造器 
 	* @param d Date 类型的参数
 	*/
-   
-    
     function DateTool(d)
     {
         this.date =  d;
