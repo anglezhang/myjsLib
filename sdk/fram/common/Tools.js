@@ -33,6 +33,24 @@ define(function(require, exports, module)
     };
 
     /**
+    *@描述 统计数组元素个数
+    *@param ele
+    *@param array
+    */
+    module.exports.countArray = function(ele,array)
+    {
+        var count = 0;
+        for(var i=0;i<array.length;i++)
+        {
+            var thisEle = array[i];
+            if(thisEle === ele)
+            {
+                count++;
+            }
+        }
+        return count;
+    };
+    /**
     *@描述 判断是否空对象
     */
     var isEmptyObj = function(obj)
@@ -370,6 +388,13 @@ define(function(require, exports, module)
     };
 
     /**
+    *@保留2位小数
+    */
+    module.exports.ChangeTwoDecimFloat = function(number)
+    {
+        return changeTwoDecimal_f(number);
+    };
+    /**
     *@描述 保留俩位小数 
     */
     module.exports.ChangeTwoDecimalNumber = function(number)
@@ -416,12 +441,37 @@ define(function(require, exports, module)
     */
     var setSelectVal = function($,id,val)
     {
-        $("#" + id).val(val);
         $("#" + id).find("option[selected]").removeAttr('selected');
         var optionObj = isEmptyObj(val)
             ? $("#" + id).find("option").first() 
             : $("#" + id).find("option[value='" + val+ "']");
         optionObj.attr("selected",true);
+        $("#" + id).val(val);
+    };
+
+    /**
+    *@描述 复制对象
+    *@param source 源对象
+    *@param tagert 对象
+    */
+    var cloneObject = function(source,tagert)
+    {
+        for(key in source)
+        {
+            var thisName = key;
+            var thisValue = source[key];
+            tagert[thisName] = thisValue;
+        }
+    };
+
+    /**
+    *@描述 复制对象
+    *@param source 源对象
+    *@param tagert 对象
+    */
+    module.exports.CloneObject = function(source,tagert)
+    {
+        cloneObject(source,tagert);
     };
 
     /**
